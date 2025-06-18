@@ -95,6 +95,7 @@ func (r *rows) Next(dest []driver.Value) error {
 func (r *rows) fetchNextPage(ctx context.Context, token *string) (bool, error) {
 	var err error
 	r.out, err = r.athena.GetQueryResults(ctx, &athena.GetQueryResultsInput{
+		MaxResults:       aws.Int32(1000),
 		QueryExecutionId: aws.String(r.queryID),
 		NextToken:        token,
 	})
