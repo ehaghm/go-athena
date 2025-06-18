@@ -81,7 +81,7 @@ func TestQuery(t *testing.T) {
 		},
 	}
 	expectedTypeNames := []string{"varchar", "tinyint", "smallint", "integer", "bigint", "boolean", "float", "double", "varchar", "timestamp", "date", "decimal"}
-	harness.uploadData(expected)
+	harness.uploadData(ctx, expected)
 
 	rows := harness.mustQuery(ctx, "select * from %s", harness.table)
 	index := -1
@@ -123,7 +123,7 @@ func TestOpen(t *testing.T) {
 	awsConfig, err := config.LoadDefaultConfig(context.Background())
 	require.NoError(t, err, "LoadDefaultConfig")
 	db, err := Open(DriverConfig{
-		Config: &awsConfig,
+		Config:         &awsConfig,
 		Database:       AthenaDatabase,
 		OutputLocation: fmt.Sprintf("s3://%s/noop", S3Bucket),
 	})
